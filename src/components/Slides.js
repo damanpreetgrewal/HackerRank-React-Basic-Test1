@@ -2,27 +2,28 @@ import React, { useState, useEffect } from 'react';
 
 const Slides = ({ slides }) => {
   const [slide, setSlide] = useState(slides[0]);
-  const [disablePrev, setDisablePrev] = useState(true);
   const [disableNext, setDisableNext] = useState(false);
+  const [disablePrev, setDisablePrev] = useState(true);
   const [disableRestart, setDisableRestart] = useState(true);
 
   //Total Slides
-  const slideMaxIndex = slides.length - 1;
+  const SlidesMaxIndex = slides.length - 1;
 
   useEffect(() => {
     const curIdx = slides.findIndex(item => item.title === slide.title);
+    console.log(curIdx);
 
-    if (curIdx === slideMaxIndex) {
+    if (curIdx === SlidesMaxIndex) {
       setDisableNext(true);
     } else if (curIdx === 0) {
       setDisablePrev(true);
       setDisableRestart(true);
-    } else if (curIdx > 0 && curIdx < slideMaxIndex) {
+    } else if (curIdx > 0 && curIdx < SlidesMaxIndex) {
       setDisableNext(false);
       setDisablePrev(false);
       setDisableRestart(false);
     }
-  }, [slide.title, slides, slideMaxIndex]);
+  }, [slide.title,SlidesMaxIndex,slides]);
 
   const pass = numIdx => {
     setSlide(
@@ -32,6 +33,7 @@ const Slides = ({ slides }) => {
 
   const restart = () => {
     setDisableNext(false);
+    setDisablePrev(true);
     setDisableRestart(true);
     setSlide(slides[0]);
   };
